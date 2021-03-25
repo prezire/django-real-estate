@@ -1,0 +1,41 @@
+import os
+from django.contrib.messages import constants as messages
+from distutils.util import strtobool
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('APP_SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = strtobool(os.getenv('APP_DEBUG'))
+
+ALLOWED_HOSTS = []
+
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+    }
+}
+
+#Messages.
+MESSAGE_TAGS = {
+  messages.ERROR: 'danger'
+}
+
+#Email.
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = strtobool(os.getenv('EMAIL_USE_TLS'))
+EMAIL_USE_SSL = strtobool(os.getenv('EMAIL_USE_SSL'))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
